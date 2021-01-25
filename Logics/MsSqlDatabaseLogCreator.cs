@@ -18,7 +18,7 @@ using static Logics.Models.CustomEventArgs.DatabaseLogCreatorArgs;
 
 namespace Logics
 {
-    public class DatabaseLogCreator : IDatabaseLogCreator, IDisposable
+    public class MsSqlDatabaseLogCreator : IDatabaseLogCreator, IDisposable
     {
         private ProgressNoticesHandler _progressNotify;
         public event ProgressNoticesHandler ProgressNotify
@@ -191,7 +191,7 @@ WHERE t.name = @TableName";
             }
         }
 
-        public DatabaseLogCreator()
+        public MsSqlDatabaseLogCreator()
         {
             this.LogTableSettings = new LogTableSettings
             {

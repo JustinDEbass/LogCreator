@@ -18,7 +18,7 @@ namespace LogCreator
 {
     public partial class MainForm : Form
     {
-        private readonly IDatabaseLogCreator _databaseLogCreator = new DatabaseLogCreator();
+        private readonly IDatabaseLogCreator _databaseLogCreator = new MsSqlDatabaseLogCreator();
 
         public MainForm()
         {
