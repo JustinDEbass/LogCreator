@@ -18,9 +18,15 @@ using static Logics.Models.CustomEventArgs.DatabaseLogCreatorArgs;
 
 namespace Logics
 {
+    /// <summary>
+    /// Настройка логирования изменений в таблицах базы данных в СУБД MS SQL
+    /// </summary>
     public class MsSqlDatabaseLogCreator : IDatabaseLogCreator, IDisposable
     {
         private ProgressNoticesHandler _progressNotify;
+        /// <summary>
+        /// Уведомления о прогрессе выполнения
+        /// </summary>
         public event ProgressNoticesHandler ProgressNotify
         {
             add
@@ -38,22 +44,22 @@ namespace Logics
 
         #region Запросы
 
-        private string _queryDatabaseList = @"SELECT database_id ID, 
+        private readonly string _queryDatabaseList = @"SELECT database_id ID, 
     name Name 
 FROM sys.databases 
 WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb') 
     AND state = 0 
 ORDER BY name";
 
-        private string _queryUseDatabase = @"USE {0}";
+        private readonly string _queryUseDatabase = @"USE {0}";
 
-        private string _queryTableList = @"SELECT object_id ID, 
+        private readonly string _queryTableList = @"SELECT object_id ID, 
     name  Name
 FROM sys.all_objects 
 WHERE type = 'U' 
 ORDER BY name";
 
-        private string _queryCreateLogTableScript = @"IF OBJECT_ID('{{ LogTableSettings.LogTableName }}') IS NULL
+        private readonly string _queryCreateLogTableScript = @"IF OBJECT_ID('{{ LogTableSettings.LogTableName }}') IS NULL
 BEGIN
 	CREATE TABLE [{{ LogTableSettings.LogTableName }}] (
 		[{{ LogTableSettings.EventTypeColumnName }}] CHAR(1) NOT NULL,
@@ -67,7 +73,7 @@ BEGIN
 	ALTER TABLE [{{ LogTableSettings.LogTableName }}] WITH CHECK ADD CHECK ([{{ LogTableSettings.EventTypeColumnName }}] = 'E' OR [{{ LogTableSettings.EventTypeColumnName }}] = 'D' OR [{{ LogTableSettings.EventTypeColumnName }}] = 'U' OR [{{ LogTableSettings.EventTypeColumnName }}] = 'I')
 END";
 
-        private string _queryCreateLogTrigger = @"CREATE TRIGGER [{{ LogTriggerVariables.TriggerName }}]
+        private readonly string _queryCreateLogTrigger = @"CREATE TRIGGER [{{ LogTriggerVariables.TriggerName }}]
 ON [{{ LogTriggerVariables.TableName }}]
 AFTER DELETE, INSERT, UPDATE
 AS
@@ -75,26 +81,26 @@ BEGIN
     --UPDATE
     IF EXISTS (SELECT 1 FROM inserted) AND EXISTS (SELECT 1 FROM deleted)
         INSERT INTO [{{ LogTableSettings.LogTableName }}] ([{{ LogTableSettings.EventTypeColumnName }}], [{{ LogTableSettings.TableNameColumnName }}], [{{ LogTableSettings.PrimaryKeyColumnName }}], [{{ LogTableSettings.RowDataColumnName }}])
-		SELECT 'U', '{{ LogTriggerVariables.TableName }}', inserted.[{{ LogTriggerVariables.PrimaryKeyColumnName }}]{{ if LogTriggerSettings.RowDataDisable == false }}, {{ LogTriggerVariables.RowData }}{{ else }}, NULL{{ end }} 
+		SELECT 'U', '{{ LogTriggerVariables.TableName }}', inserted.[{{ LogTriggerVariables.PrimaryKeyColumnName }}]{{ if LogTriggerSettings.RowDataDisable == false }}, {{ LogTriggerVariables.RowDataQuery }}{{ else }}, NULL{{ end }} 
         FROM inserted
 
     --INSERT
     ELSE IF EXISTS (SELECT 1 FROM inserted)
         INSERT INTO [{{ LogTableSettings.LogTableName }}] ([{{ LogTableSettings.EventTypeColumnName }}], [{{ LogTableSettings.TableNameColumnName }}], [{{ LogTableSettings.PrimaryKeyColumnName }}], [{{ LogTableSettings.RowDataColumnName }}])
-		SELECT 'I', '{{ LogTriggerVariables.TableName }}', inserted.[{{ LogTriggerVariables.PrimaryKeyColumnName }}]{{ if LogTriggerSettings.RowDataDisable == false }}, {{ LogTriggerVariables.RowData }}{{ else }}, NULL{{ end }} 
+		SELECT 'I', '{{ LogTriggerVariables.TableName }}', inserted.[{{ LogTriggerVariables.PrimaryKeyColumnName }}]{{ if LogTriggerSettings.RowDataDisable == false }}, {{ LogTriggerVariables.RowDataQuery }}{{ else }}, NULL{{ end }} 
         FROM inserted
 
     --DELETE
     ELSE IF EXISTS (SELECT 1 FROM deleted)
 		INSERT INTO [{{ LogTableSettings.LogTableName }}] ([{{ LogTableSettings.EventTypeColumnName }}], [{{ LogTableSettings.TableNameColumnName }}], [{{ LogTableSettings.PrimaryKeyColumnName }}], [{{ LogTableSettings.RowDataColumnName }}])
-		SELECT 'D', '{{ LogTriggerVariables.TableName }}', deleted.[{{ LogTriggerVariables.PrimaryKeyColumnName }}]{{ if LogTriggerSettings.RowDataDisable == false }}, {{ LogTriggerVariables.RowData }}{{ else }}, NULL{{ end }} 
+		SELECT 'D', '{{ LogTriggerVariables.TableName }}', deleted.[{{ LogTriggerVariables.PrimaryKeyColumnName }}]{{ if LogTriggerSettings.RowDataDisable == false }}, {{ LogTriggerVariables.RowDataQuery }}{{ else }}, NULL{{ end }} 
         FROM deleted
 END";
 
-        private string _queryDeleteLogTrigger = @"IF OBJECT_ID ('{{ TriggerName }}', 'TR') IS NOT NULL  
+        private readonly string _queryDeleteLogTrigger = @"IF OBJECT_ID ('{{ TriggerName }}', 'TR') IS NOT NULL  
 DROP TRIGGER {{ TriggerName }}";
 
-        private string _queryTriggerList = @"SELECT so.id ID, 
+        private readonly string _queryTriggerList = @"SELECT so.id ID, 
     so.name Name, 
 	USER_NAME(so.uid) OwnerName, 
 	s.name SchemaName, 
@@ -117,7 +123,7 @@ WHERE so.type = 'TR'
         OR so.name LIKE @TriggerName
     )";
 
-        private string _queryTableColumnList = @"SELECT DISTINCT tc.column_id ID, 
+        private readonly string _queryTableColumnList = @"SELECT DISTINCT tc.column_id ID, 
     tc.name Name,
 	ct.name TypeName,
 	COALESCE(tcp.is_primary_key, 0) IsIdentity
@@ -147,21 +153,54 @@ FROM sys.schemas s
 			AND tc.column_id = tcp.column_id
 WHERE t.name = @TableName";
 
-        private string _patternGetDataFromColumn = "'{{ Name }}' + '=' + ISNULL(CAST([{{ Name }}] AS NVARCHAR), '') + ';'";
+        private readonly string _patternGetDataFromColumn = "'{{ Name }}' + '=' + ISNULL(CAST([{{ Name }}] AS NVARCHAR), '') + ';'";
 
         #endregion Запросы
 
+        /// <summary>
+        /// Наименование сервера
+        /// </summary>
         public string ServerName { get; private set; }
+        /// <summary>
+        /// Имя для подключения
+        /// </summary>
         public string LoginName { get; private set; }
+        /// <summary>
+        /// Пароль для подключения
+        /// </summary>
         public string LoginPassword { get; private set; }
+        /// <summary>
+        /// Используется Windows аутентификация
+        /// </summary>
         public bool IsWindowsAuthentication { get; private set; }
+        /// <summary>
+        /// Строка подключения к базе данных
+        /// </summary>
         public string ConnectionString { get; private set; }
+        /// <summary>
+        /// Наименование базы данных
+        /// </summary>
         public string DatabaseName { get; private set; }
+        /// <summary>
+        /// Подключение к базе данных
+        /// </summary>
         private IDbConnection Connection { get; set; }
+        /// <summary>
+        /// Настройки таблицы с логами
+        /// </summary>
         public LogTableSettings LogTableSettings { get; set; }
+        /// <summary>
+        /// Настройки триггера для логирования
+        /// </summary>
         public LogTriggerSettings LogTriggerSettings { get; set; }
+        /// <summary>
+        /// Заменять существующий триггер
+        /// </summary>
         public bool ReplaceExistTrigger { get; set; }
 
+        /// <summary>
+        /// Является пустой строка подключения к базе данных
+        /// </summary>
         public bool IsEmptyConnectionString
         {
             get
@@ -169,6 +208,9 @@ WHERE t.name = @TableName";
                 return string.IsNullOrEmpty(this.ServerName) || string.IsNullOrEmpty(this.ConnectionString);
             }
         }
+        /// <summary>
+        /// Является пустым наименование базы данных
+        /// </summary>
         public bool IsEmptyDatabaseName
         {
             get
@@ -176,6 +218,9 @@ WHERE t.name = @TableName";
                 return string.IsNullOrEmpty(this.DatabaseName);
             }
         }
+        /// <summary>
+        /// Является пустым подключение к базе данных
+        /// </summary>
         public bool IsEmptyConnection
         {
             get
@@ -183,6 +228,9 @@ WHERE t.name = @TableName";
                 return this.Connection == null;
             }
         }
+        /// <summary>
+        /// Является пустым подключение к выбранной базе данных
+        /// </summary>
         public bool IsEmptyConnectionToDatabase
         {
             get
@@ -224,6 +272,13 @@ WHERE t.name = @TableName";
             };
         }
 
+        /// <summary>
+        /// Подключиться к серверу базы данных
+        /// </summary>
+        /// <param name="serverName">Наименование сервера</param>
+        /// <param name="loginName">Имя для подключения</param>
+        /// <param name="loginPassword">Пароль для подключения</param>
+        /// <param name="isWindowsAuthentication">Используется Windows аутентификация</param>
         public void ConnectToServer(string serverName, string loginName, string loginPassword, bool isWindowsAuthentication)
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.ConnectToServerStart, serverName, null, null, null));
@@ -254,6 +309,9 @@ WHERE t.name = @TableName";
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.ConnectToServerEnd, this.ServerName));
         }
 
+        /// <summary>
+        /// Отключиться от сервера базы данных
+        /// </summary>
         public void DisconnectFromServer()
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DisconnectFromServerStart, this.ServerName));
@@ -265,6 +323,10 @@ WHERE t.name = @TableName";
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DisconnectFromServerEnd, this.ServerName));
         }
 
+        /// <summary>
+        /// Получить наименования баз данных
+        /// </summary>
+        /// <returns>Список наименований баз данных</returns>
         public async Task<List<Database>> GetDatabaseNameListAsync()
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.GetDatabaseNameListStart, this.ServerName));
@@ -285,11 +347,19 @@ WHERE t.name = @TableName";
             return result;
         }
 
+        /// <summary>
+        /// Получить наименования баз данных
+        /// </summary>
+        /// <returns>Список наименований баз данных</returns>
         public List<Database> GetDatabaseNameList()
         {
             return this.GetDatabaseNameListAsync().Result;
         }
 
+        /// <summary>
+        /// Подключиться к базе данных
+        /// </summary>
+        /// <param name="databaseName">Наименование базы данных</param>
         public async Task ConnectionToDatabaseAsync(string databaseName)
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DisconnectFromServerStart, this.ServerName, databaseName));
@@ -311,11 +381,18 @@ WHERE t.name = @TableName";
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DisconnectFromServerEnd, this.ServerName, this.DatabaseName));
         }
 
+        /// <summary>
+        /// Подключиться к базе данных
+        /// </summary>
+        /// <param name="databaseName">Наименование базы данных</param>
         public void ConnectionToDatabase(string databaseName)
         {
             this.ConnectionToDatabaseAsync(databaseName).Wait();
         }
 
+        /// <summary>
+        /// Отключиться от базы данных
+        /// </summary>
         public void DisconnectFromDatabase()
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DisconnectFromDatabaseStart, this.ServerName, this.DatabaseName));
@@ -325,6 +402,10 @@ WHERE t.name = @TableName";
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DisconnectFromDatabaseEnd, this.ServerName, this.DatabaseName));
         }
 
+        /// <summary>
+        /// Получить наименования таблиц
+        /// </summary>
+        /// <returns>Список наименований таблиц</returns>
         public async Task<List<Table>> GetTableNameListAsync()
         {
             List<Table> result = new List<Table>();
@@ -345,11 +426,19 @@ WHERE t.name = @TableName";
             return result;
         }
 
+        /// <summary>
+        /// Получить наименования таблиц
+        /// </summary>
+        /// <returns>Список наименований таблиц</returns>
         public List<Table> GetTableNameList()
         {
             return this.GetTableNameListAsync().Result;
         }
 
+        /// <summary>
+        /// Генерировать триггеры для логирования
+        /// </summary>
+        /// <param name="tableNameList">Список наименований таблиц</param>
         public async Task GenerateLogTriggersAsync(List<string> tableNameList)
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.GenerateLogTriggersStart, this.ServerName, this.DatabaseName));
@@ -414,7 +503,7 @@ WHERE t.name = @TableName";
                         TableName = tableName,
                         LogTableName = this.LogTableSettings.LogTableName,
                         PrimaryKeyColumnName = tableColumnList.FirstOrDefault(f => f.IsIdentity == true)?.Name,
-                        RowData = string.Join(" + ", columnInfo.Distinct().ToArray())
+                        RowDataQuery = string.Join(" + ", columnInfo.Distinct().ToArray())
                     }
                 );
 
@@ -424,11 +513,19 @@ WHERE t.name = @TableName";
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.GenerateLogTriggersEnd, this.ServerName, this.DatabaseName));
         }
 
+        /// <summary>
+        /// Генерировать триггеры для логирования
+        /// </summary>
+        /// <param name="tableNameList">Список наименований таблиц</param>
         public void GenerateLogTriggers(List<string> tableNameList)
         {
             this.GenerateLogTriggersAsync(tableNameList).Wait();
         }
 
+        /// <summary>
+        /// Удалить триггеры для логирования
+        /// </summary>
+        /// <param name="tableNameList">Список наименований таблиц</param>
         public async Task DeleteLogTriggersAsync(List<string> tableNameList)
         {
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DeleteLogTriggersStart, this.ServerName, this.DatabaseName));
@@ -471,11 +568,19 @@ WHERE t.name = @TableName";
             this._progressNotify?.Invoke(this, new ProgressNoticesEventArgs(ProgressNotices.DeleteLogTriggerEnd, this.ServerName, this.DatabaseName));
         }
 
+        /// <summary>
+        /// Удалить триггеры для логирования
+        /// </summary>
+        /// <param name="tableNameList">Список наименований таблиц</param>
         public void DeleteLogTriggers(List<string> tableNameList)
         {
             this.DeleteLogTriggersAsync(tableNameList).Wait();
         }
 
+        /// <summary>
+        /// Создать таблицу с логами
+        /// </summary>
+        /// <param name="logTableSettings">Настройки таблицы с логами</param>
         private async Task CreateLogTable(LogTableSettings logTableSettings)
         {
             if (this.LogTableSettings.IsValid == false)
@@ -494,6 +599,11 @@ WHERE t.name = @TableName";
             await this.Connection.ExecuteAsync(createLogTableString);
         }
 
+        /// <summary>
+        /// Получить список триггеров
+        /// </summary>
+        /// <param name="triggerName">Наименование триггера</param>
+        /// <returns>Список триггеров</returns>
         private async Task<List<Trigger>> GetTriggerList(string triggerName = null)
         {
             List<Trigger> result = new List<Trigger>() { };
@@ -510,6 +620,11 @@ WHERE t.name = @TableName";
             return result;
         }
 
+        /// <summary>
+        /// Получить список столбцов таблицы
+        /// </summary>
+        /// <param name="tableName">Наименование таблицы</param>
+        /// <returns>Список столбцов</returns>
         private async Task<List<Column>> GetTableColumnList(string tableName)
         {
             List<Column> result = new List<Column>() { };
@@ -526,6 +641,12 @@ WHERE t.name = @TableName";
             return result;
         }
 
+        /// <summary>
+        /// Создать триггер для логирования
+        /// </summary>
+        /// <param name="logTableSettings">Настройки таблицы с логами</param>
+        /// <param name="logTriggerSettings">Настройки триггера для логирования</param>
+        /// <param name="logTriggerVariables">Переменные триггера для логирования</param>
         private async Task CreateLogTrigger(LogTableSettings logTableSettings, LogTriggerSettings logTriggerSettings, LogTriggerVariables logTriggerVariables)
         {
             if (logTableSettings.IsValid == false)
@@ -554,6 +675,10 @@ WHERE t.name = @TableName";
             await this.Connection.ExecuteAsync(createLogTriggerString);
         }
 
+        /// <summary>
+        /// Удалить триггер для логирования
+        /// </summary>
+        /// <param name="triggerName">Наименование триггера</param>
         private async Task DeleteLogTrigger(string triggerName)
         {
             if (this.IsEmptyConnectionToDatabase)

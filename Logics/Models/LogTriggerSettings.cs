@@ -8,18 +8,51 @@ using static Logics.Enums.Types;
 
 namespace Logics.Models
 {
+    /// <summary>
+    /// Настройки триггера для логирования
+    /// </summary>
     public class LogTriggerSettings
     {
+        /// <summary>
+        /// Тип префикса наименования триггера
+        /// </summary>
         public PrefixTypes PrefixType { get; set; }
+        /// <summary>
+        /// Текст префикса наименования триггера
+        /// </summary>
         public string PrefixText { get; set; }
+        /// <summary>
+        /// Количество случайных чисел в префиксе наименования триггера
+        /// </summary>
         public int? PrefixRandomNumberCount { get; set; }
+        /// <summary>
+        /// Тип постфикса наименования триггера
+        /// </summary>
         public PostfixTypes PostfixType { get; set; }
+        /// <summary>
+        /// Текст постфикса наименования триггера
+        /// </summary>
         public string PostfixText { get; set; }
+        /// <summary>
+        /// Количество случайных чисел в постфиксе наименования триггера
+        /// </summary>
         public int? PostfixRandomNumberCount { get; set; }
+        /// <summary>
+        /// Отключено формирование значений строки
+        /// </summary>
         public bool RowDataDisable { get; set; }
+        /// <summary>
+        /// Список наименования столбцов для игнорирования при формировании значений строки
+        /// </summary>
         public List<string> IgnoreColumnNames { get; set; }
+        /// <summary>
+        /// Список наименования типов данных для игнорирования при формировании значений строки
+        /// </summary>
         public List<string> IgnoreDataTypeNames { get; set; }
 
+        /// <summary>
+        /// Является валидным
+        /// </summary>
         public bool IsValid
         {
             get
@@ -28,6 +61,10 @@ namespace Logics.Models
             }
         }
 
+        /// <summary>
+        /// Валидация
+        /// </summary>
+        /// <returns>Список свойств с ошибками валидации</returns>
         public Dictionary<string, List<LogTriggerSettingsValidateErrors>> Validate()
         {
             Dictionary<string, List<LogTriggerSettingsValidateErrors>> result = new Dictionary<string, List<LogTriggerSettingsValidateErrors>>() { };
@@ -53,6 +90,11 @@ namespace Logics.Models
             return result;
         }
 
+        /// <summary>
+        /// Валидация
+        /// </summary>
+        /// <param name="propertyName">Свойство</param>
+        /// <returns>Список ошибок валидации</returns>
         public List<LogTriggerSettingsValidateErrors> Validate(string propertyName)
         {
             List<LogTriggerSettingsValidateErrors> result = new List<LogTriggerSettingsValidateErrors>() { };

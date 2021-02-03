@@ -174,7 +174,7 @@
             this.rowDataSettingsFormButton.Location = new System.Drawing.Point(6, 246);
             this.rowDataSettingsFormButton.Name = "rowDataSettingsFormButton";
             this.rowDataSettingsFormButton.Size = new System.Drawing.Size(338, 23);
-            this.rowDataSettingsFormButton.TabIndex = 14;
+            this.rowDataSettingsFormButton.TabIndex = 15;
             this.rowDataSettingsFormButton.Text = "Настройка триггера для логирования изменений";
             this.rowDataSettingsFormButton.UseVisualStyleBackColor = true;
             this.rowDataSettingsFormButton.Click += new System.EventHandler(this.OnClickRowDataSettingsFormButton);
@@ -185,7 +185,7 @@
             this.logTableSettingsFormButton.Location = new System.Drawing.Point(6, 217);
             this.logTableSettingsFormButton.Name = "logTableSettingsFormButton";
             this.logTableSettingsFormButton.Size = new System.Drawing.Size(338, 23);
-            this.logTableSettingsFormButton.TabIndex = 15;
+            this.logTableSettingsFormButton.TabIndex = 14;
             this.logTableSettingsFormButton.Text = "Настройка таблицы с логами";
             this.logTableSettingsFormButton.UseVisualStyleBackColor = true;
             this.logTableSettingsFormButton.Click += new System.EventHandler(this.OnClickLogTableSettingsFormButton);
@@ -224,7 +224,7 @@
             this.configureLoggingButton.Location = new System.Drawing.Point(12, 512);
             this.configureLoggingButton.Name = "configureLoggingButton";
             this.configureLoggingButton.Size = new System.Drawing.Size(350, 23);
-            this.configureLoggingButton.TabIndex = 16;
+            this.configureLoggingButton.TabIndex = 17;
             this.configureLoggingButton.Text = "Настроить логирование";
             this.configureLoggingButton.UseVisualStyleBackColor = true;
             this.configureLoggingButton.Click += new System.EventHandler(this.OnClickConfigureLoggingButton);
@@ -235,7 +235,7 @@
             this.disableLoggingButton.Location = new System.Drawing.Point(12, 541);
             this.disableLoggingButton.Name = "disableLoggingButton";
             this.disableLoggingButton.Size = new System.Drawing.Size(350, 23);
-            this.disableLoggingButton.TabIndex = 17;
+            this.disableLoggingButton.TabIndex = 18;
             this.disableLoggingButton.Text = "Отключить логирование";
             this.disableLoggingButton.UseVisualStyleBackColor = true;
             this.disableLoggingButton.Click += new System.EventHandler(this.OnClickDisableLoggingButton);
@@ -248,7 +248,7 @@
             this.mainFormStatusStrip.Name = "mainFormStatusStrip";
             this.mainFormStatusStrip.Size = new System.Drawing.Size(375, 22);
             this.mainFormStatusStrip.SizingGrip = false;
-            this.mainFormStatusStrip.TabIndex = 18;
+            this.mainFormStatusStrip.TabIndex = 19;
             this.mainFormStatusStrip.Text = "statusStrip1";
             // 
             // progressStatusLabel
@@ -264,7 +264,7 @@
             this.replaceExistTriggerCheckBox.Location = new System.Drawing.Point(12, 489);
             this.replaceExistTriggerCheckBox.Name = "replaceExistTriggerCheckBox";
             this.replaceExistTriggerCheckBox.Size = new System.Drawing.Size(206, 17);
-            this.replaceExistTriggerCheckBox.TabIndex = 19;
+            this.replaceExistTriggerCheckBox.TabIndex = 16;
             this.replaceExistTriggerCheckBox.Text = "Заменить существующие триггеры";
             this.replaceExistTriggerCheckBox.UseVisualStyleBackColor = true;
             this.replaceExistTriggerCheckBox.CheckedChanged += new System.EventHandler(this.OnCheckedChangedReplaceExistTriggerCheckBox);

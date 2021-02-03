@@ -8,8 +8,17 @@ using System.Windows.Forms;
 
 namespace LogCreator.Helpers
 {
-    public static class ControlHelper
+    /// <summary>
+    /// Помощники для управляющих элементов
+    /// </summary>
+    public static class ControlHelpers
     {
+        /// <summary>
+        /// Выбрать элемент
+        /// </summary>
+        /// <param name="comboBox">Управляющий элемент "Список"</param>
+        /// <param name="lambda">Выражение для определения элемента, который необходимо выбрать в списке</param>
+        /// <returns>Индекс выбранного элемента</returns>
         public static int SelectItem(this ComboBox comboBox, Func<ComboBoxItem, bool> lambda)
         {
             var result = -1;
@@ -21,6 +30,7 @@ namespace LogCreator.Helpers
                 if (lambda(item))
                 {
                     comboBox.SelectedIndex = i;
+                    result = comboBox.SelectedIndex;
 
                     break;
                 }

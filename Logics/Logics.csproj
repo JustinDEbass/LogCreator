@@ -54,21 +54,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseLogCreator.cs" />
+    <Compile Include="MsSqlDatabaseLogCreator.cs" />
     <Compile Include="Enums\Errors.cs" />
     <Compile Include="Enums\Events.cs" />
     <Compile Include="Enums\Types.cs" />
     <Compile Include="Interfaces\IDatabaseLogCreator.cs" />
-    <Compile Include="Models\AuditTriggerSettings.cs" />
+    <Compile Include="Models\LogTriggerSettings.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\CustomEventArgs.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Table.cs" />
-    <Compile Include="Models\AuditTableSettings.cs" />
+    <Compile Include="Models\LogTableSettings.cs" />
     <Compile Include="Models\Trigger.cs" />
-    <Compile Include="Models\AuditTriggerVariables.cs" />
+    <Compile Include="Models\LogTriggerVariables.cs" />
     <Compile Include="Models\TriggerNameGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

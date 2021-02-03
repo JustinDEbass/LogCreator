@@ -63,7 +63,7 @@
     <Compile Include="LogTableSettingsForm.Designer.cs">
       <DependentUpon>LogTableSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ControlHelper.cs" />
+    <Compile Include="Helpers\ControlHelpers.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

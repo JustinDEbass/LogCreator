@@ -62,8 +62,8 @@
             this.prefixTextLabel = new System.Windows.Forms.Label();
             this.prefixTextTextBox = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.rowDataDisableCheckBox = new System.Windows.Forms.CheckBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -84,7 +84,7 @@
             this.groupBox3.Location = new System.Drawing.Point(6, 43);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(338, 201);
-            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Игнорируемые столбцы";
             // 
@@ -94,7 +94,7 @@
             this.ignoreColumnNamesLabel.Location = new System.Drawing.Point(6, 84);
             this.ignoreColumnNamesLabel.Name = "ignoreColumnNamesLabel";
             this.ignoreColumnNamesLabel.Size = new System.Drawing.Size(173, 13);
-            this.ignoreColumnNamesLabel.TabIndex = 5;
+            this.ignoreColumnNamesLabel.TabIndex = 22;
             this.ignoreColumnNamesLabel.Text = "Список игнорируемых столбцов:";
             // 
             // ignoreColumnNamesListBox
@@ -103,14 +103,14 @@
             this.ignoreColumnNamesListBox.Location = new System.Drawing.Point(6, 100);
             this.ignoreColumnNamesListBox.Name = "ignoreColumnNamesListBox";
             this.ignoreColumnNamesListBox.Size = new System.Drawing.Size(326, 95);
-            this.ignoreColumnNamesListBox.TabIndex = 6;
+            this.ignoreColumnNamesListBox.TabIndex = 23;
             // 
             // removeColumnNameButton
             // 
             this.removeColumnNameButton.Location = new System.Drawing.Point(87, 58);
             this.removeColumnNameButton.Name = "removeColumnNameButton";
             this.removeColumnNameButton.Size = new System.Drawing.Size(75, 23);
-            this.removeColumnNameButton.TabIndex = 4;
+            this.removeColumnNameButton.TabIndex = 21;
             this.removeColumnNameButton.Text = "Удалить";
             this.removeColumnNameButton.UseVisualStyleBackColor = true;
             this.removeColumnNameButton.Click += new System.EventHandler(this.OnClickRemoveColumnNameButton);
@@ -120,7 +120,7 @@
             this.addColumnNameButton.Location = new System.Drawing.Point(6, 58);
             this.addColumnNameButton.Name = "addColumnNameButton";
             this.addColumnNameButton.Size = new System.Drawing.Size(75, 23);
-            this.addColumnNameButton.TabIndex = 3;
+            this.addColumnNameButton.TabIndex = 20;
             this.addColumnNameButton.Text = "Добавить";
             this.addColumnNameButton.UseVisualStyleBackColor = true;
             this.addColumnNameButton.Click += new System.EventHandler(this.OnClickAddColumnNameButton);
@@ -130,7 +130,7 @@
             this.columnNameTextBox.Location = new System.Drawing.Point(6, 32);
             this.columnNameTextBox.Name = "columnNameTextBox";
             this.columnNameTextBox.Size = new System.Drawing.Size(326, 20);
-            this.columnNameTextBox.TabIndex = 2;
+            this.columnNameTextBox.TabIndex = 19;
             // 
             // columnNameLabel
             // 
@@ -138,7 +138,7 @@
             this.columnNameLabel.Location = new System.Drawing.Point(6, 16);
             this.columnNameLabel.Name = "columnNameLabel";
             this.columnNameLabel.Size = new System.Drawing.Size(130, 13);
-            this.columnNameLabel.TabIndex = 1;
+            this.columnNameLabel.TabIndex = 18;
             this.columnNameLabel.Text = "Наименование столбца:";
             // 
             // cancelButton
@@ -146,7 +146,7 @@
             this.cancelButton.Location = new System.Drawing.Point(550, 437);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 14;
+            this.cancelButton.TabIndex = 31;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.OnClickCancelButton);
@@ -156,7 +156,7 @@
             this.saveButton.Location = new System.Drawing.Point(631, 437);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 15;
+            this.saveButton.TabIndex = 32;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.OnClickSaveButton);
@@ -172,7 +172,7 @@
             this.groupBox4.Location = new System.Drawing.Point(350, 43);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(338, 201);
-            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabIndex = 24;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Игнорируемые типы данных";
             // 
@@ -182,7 +182,7 @@
             this.ignoreDataTypeNamesLabel.Location = new System.Drawing.Point(6, 84);
             this.ignoreDataTypeNamesLabel.Name = "ignoreDataTypeNamesLabel";
             this.ignoreDataTypeNamesLabel.Size = new System.Drawing.Size(195, 13);
-            this.ignoreDataTypeNamesLabel.TabIndex = 12;
+            this.ignoreDataTypeNamesLabel.TabIndex = 29;
             this.ignoreDataTypeNamesLabel.Text = "Список игнорируемых типов данных:";
             // 
             // ignoreDataTypeNamesListBox
@@ -191,14 +191,14 @@
             this.ignoreDataTypeNamesListBox.Location = new System.Drawing.Point(6, 100);
             this.ignoreDataTypeNamesListBox.Name = "ignoreDataTypeNamesListBox";
             this.ignoreDataTypeNamesListBox.Size = new System.Drawing.Size(326, 95);
-            this.ignoreDataTypeNamesListBox.TabIndex = 13;
+            this.ignoreDataTypeNamesListBox.TabIndex = 30;
             // 
             // removeDataTypeNameButton
             // 
             this.removeDataTypeNameButton.Location = new System.Drawing.Point(87, 58);
             this.removeDataTypeNameButton.Name = "removeDataTypeNameButton";
             this.removeDataTypeNameButton.Size = new System.Drawing.Size(75, 23);
-            this.removeDataTypeNameButton.TabIndex = 11;
+            this.removeDataTypeNameButton.TabIndex = 28;
             this.removeDataTypeNameButton.Text = "Удалить";
             this.removeDataTypeNameButton.UseVisualStyleBackColor = true;
             this.removeDataTypeNameButton.Click += new System.EventHandler(this.OnClickRemoveDataTypeNameButton);
@@ -208,7 +208,7 @@
             this.addDataTypeNameButton.Location = new System.Drawing.Point(6, 58);
             this.addDataTypeNameButton.Name = "addDataTypeNameButton";
             this.addDataTypeNameButton.Size = new System.Drawing.Size(75, 23);
-            this.addDataTypeNameButton.TabIndex = 10;
+            this.addDataTypeNameButton.TabIndex = 27;
             this.addDataTypeNameButton.Text = "Добавить";
             this.addDataTypeNameButton.UseVisualStyleBackColor = true;
             this.addDataTypeNameButton.Click += new System.EventHandler(this.OnClickAddDataTypeNameButton);
@@ -218,7 +218,7 @@
             this.dataTypeNameTextBox.Location = new System.Drawing.Point(6, 32);
             this.dataTypeNameTextBox.Name = "dataTypeNameTextBox";
             this.dataTypeNameTextBox.Size = new System.Drawing.Size(326, 20);
-            this.dataTypeNameTextBox.TabIndex = 9;
+            this.dataTypeNameTextBox.TabIndex = 26;
             // 
             // dataTypeNameLabel
             // 
@@ -226,7 +226,7 @@
             this.dataTypeNameLabel.Location = new System.Drawing.Point(6, 16);
             this.dataTypeNameLabel.Name = "dataTypeNameLabel";
             this.dataTypeNameLabel.Size = new System.Drawing.Size(152, 13);
-            this.dataTypeNameLabel.TabIndex = 8;
+            this.dataTypeNameLabel.TabIndex = 25;
             this.dataTypeNameLabel.Text = "Наименование типа данных:";
             // 
             // groupBox1
@@ -236,7 +236,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(694, 163);
-            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Наименование триггера";
             // 
@@ -251,7 +251,7 @@
             this.groupBox5.Location = new System.Drawing.Point(350, 19);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(338, 138);
-            this.groupBox5.TabIndex = 9;
+            this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Постфикс";
             // 
@@ -260,7 +260,7 @@
             this.postfixRandomNumberCountTextBox.Location = new System.Drawing.Point(6, 111);
             this.postfixRandomNumberCountTextBox.Name = "postfixRandomNumberCountTextBox";
             this.postfixRandomNumberCountTextBox.Size = new System.Drawing.Size(326, 20);
-            this.postfixRandomNumberCountTextBox.TabIndex = 6;
+            this.postfixRandomNumberCountTextBox.TabIndex = 14;
             // 
             // postfixRandomNumberCountLabel
             // 
@@ -268,7 +268,7 @@
             this.postfixRandomNumberCountLabel.Location = new System.Drawing.Point(6, 95);
             this.postfixRandomNumberCountLabel.Name = "postfixRandomNumberCountLabel";
             this.postfixRandomNumberCountLabel.Size = new System.Drawing.Size(270, 13);
-            this.postfixRandomNumberCountLabel.TabIndex = 8;
+            this.postfixRandomNumberCountLabel.TabIndex = 13;
             this.postfixRandomNumberCountLabel.Text = "Количество чисел при генерации случайного числа:";
             // 
             // postfixTypeLabel
@@ -277,7 +277,7 @@
             this.postfixTypeLabel.Location = new System.Drawing.Point(6, 16);
             this.postfixTypeLabel.Name = "postfixTypeLabel";
             this.postfixTypeLabel.Size = new System.Drawing.Size(87, 13);
-            this.postfixTypeLabel.TabIndex = 4;
+            this.postfixTypeLabel.TabIndex = 9;
             this.postfixTypeLabel.Text = "Тип постфикса:";
             // 
             // postfixTypeComboBox
@@ -287,7 +287,7 @@
             this.postfixTypeComboBox.Location = new System.Drawing.Point(6, 32);
             this.postfixTypeComboBox.Name = "postfixTypeComboBox";
             this.postfixTypeComboBox.Size = new System.Drawing.Size(326, 21);
-            this.postfixTypeComboBox.TabIndex = 5;
+            this.postfixTypeComboBox.TabIndex = 10;
             this.postfixTypeComboBox.SelectedValueChanged += new System.EventHandler(this.OnChangePostfixTypeComboBox);
             // 
             // postfixTextTextBox
@@ -296,7 +296,7 @@
             this.postfixTextTextBox.Location = new System.Drawing.Point(6, 72);
             this.postfixTextTextBox.Name = "postfixTextTextBox";
             this.postfixTextTextBox.Size = new System.Drawing.Size(326, 20);
-            this.postfixTextTextBox.TabIndex = 7;
+            this.postfixTextTextBox.TabIndex = 12;
             // 
             // postfixTextLabel
             // 
@@ -304,7 +304,7 @@
             this.postfixTextLabel.Location = new System.Drawing.Point(6, 56);
             this.postfixTextLabel.Name = "postfixTextLabel";
             this.postfixTextLabel.Size = new System.Drawing.Size(98, 13);
-            this.postfixTextLabel.TabIndex = 6;
+            this.postfixTextLabel.TabIndex = 11;
             this.postfixTextLabel.Text = "Текст постфикса:";
             // 
             // groupBox2
@@ -318,7 +318,7 @@
             this.groupBox2.Location = new System.Drawing.Point(6, 19);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(338, 138);
-            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Префикс";
             // 
@@ -327,7 +327,7 @@
             this.prefixRandomNumberCountTextBox.Location = new System.Drawing.Point(6, 111);
             this.prefixRandomNumberCountTextBox.Name = "prefixRandomNumberCountTextBox";
             this.prefixRandomNumberCountTextBox.Size = new System.Drawing.Size(326, 20);
-            this.prefixRandomNumberCountTextBox.TabIndex = 5;
+            this.prefixRandomNumberCountTextBox.TabIndex = 7;
             // 
             // prefixRandomNumberCountLabel
             // 
@@ -335,7 +335,7 @@
             this.prefixRandomNumberCountLabel.Location = new System.Drawing.Point(6, 95);
             this.prefixRandomNumberCountLabel.Name = "prefixRandomNumberCountLabel";
             this.prefixRandomNumberCountLabel.Size = new System.Drawing.Size(270, 13);
-            this.prefixRandomNumberCountLabel.TabIndex = 4;
+            this.prefixRandomNumberCountLabel.TabIndex = 6;
             this.prefixRandomNumberCountLabel.Text = "Количество чисел при генерации случайного числа:";
             // 
             // prefixTypeLabel
@@ -363,7 +363,7 @@
             this.prefixTextLabel.Location = new System.Drawing.Point(6, 56);
             this.prefixTextLabel.Name = "prefixTextLabel";
             this.prefixTextLabel.Size = new System.Drawing.Size(93, 13);
-            this.prefixTextLabel.TabIndex = 0;
+            this.prefixTextLabel.TabIndex = 4;
             this.prefixTextLabel.Text = "Текст префикса:";
             // 
             // prefixTextTextBox
@@ -372,7 +372,7 @@
             this.prefixTextTextBox.Location = new System.Drawing.Point(6, 72);
             this.prefixTextTextBox.Name = "prefixTextTextBox";
             this.prefixTextTextBox.Size = new System.Drawing.Size(326, 20);
-            this.prefixTextTextBox.TabIndex = 1;
+            this.prefixTextTextBox.TabIndex = 5;
             // 
             // groupBox6
             // 
@@ -382,14 +382,9 @@
             this.groupBox6.Location = new System.Drawing.Point(12, 181);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(694, 250);
-            this.groupBox6.TabIndex = 17;
+            this.groupBox6.TabIndex = 15;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Логируемые данные";
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider1.ContainerControl = this;
             // 
             // rowDataDisableCheckBox
             // 
@@ -397,10 +392,15 @@
             this.rowDataDisableCheckBox.Location = new System.Drawing.Point(7, 20);
             this.rowDataDisableCheckBox.Name = "rowDataDisableCheckBox";
             this.rowDataDisableCheckBox.Size = new System.Drawing.Size(227, 17);
-            this.rowDataDisableCheckBox.TabIndex = 8;
+            this.rowDataDisableCheckBox.TabIndex = 16;
             this.rowDataDisableCheckBox.Text = "Отключить логирование данных строки";
             this.rowDataDisableCheckBox.UseVisualStyleBackColor = true;
             this.rowDataDisableCheckBox.CheckedChanged += new System.EventHandler(this.OnCheckedChangedRowDataDisableCheckBox);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
             // 
             // LogTriggerSettingsForm
             // 

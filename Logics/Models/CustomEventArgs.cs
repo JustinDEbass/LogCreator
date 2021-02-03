@@ -8,16 +8,40 @@ using static Logics.Enums.Events;
 
 namespace Logics.Models
 {
-    public class CustomEventArgs
+    /// <summary>
+    /// Аргументы пользовательских событий
+    /// </summary>
+    public static class CustomEventArgs
     {
+        /// <summary>
+        /// Аргументы пользовательских событий для класса "DatabaseLogCreator"
+        /// </summary>
         static public class DatabaseLogCreatorArgs
         {
+            /// <summary>
+            /// Аргументы событий уведомляющие о прогрессе выполнения
+            /// </summary>
             public class ProgressNoticesEventArgs
             {
+                /// <summary>
+                /// Наименование сервера
+                /// </summary>
                 public string ServerName { get; private set; }
+                /// <summary>
+                /// Наименование базы данных
+                /// </summary>
                 public string DatabaseName { get; private set; }
+                /// <summary>
+                /// Наименование таблицы
+                /// </summary>
                 public string TableName { get; private set; }
+                /// <summary>
+                /// Наименование триггера
+                /// </summary>
                 public string TriggerName {get; private set; }
+                /// <summary>
+                /// Сообщение
+                /// </summary>
                 public string Message { get; }
 
                 public ProgressNoticesEventArgs(string message)

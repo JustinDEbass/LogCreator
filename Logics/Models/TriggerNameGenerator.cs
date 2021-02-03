@@ -7,10 +7,22 @@ using static Logics.Enums.Types;
 
 namespace Logics.Models
 {
+    /// <summary>
+    /// Генератор наименования триггера
+    /// </summary>
     public class TriggerNameGenerator
     {
+        /// <summary>
+        /// Наименование таблицы
+        /// </summary>
         public string TableName { get; set; }
+        /// <summary>
+        /// Настройки триггера для логирования
+        /// </summary>
         public LogTriggerSettings LogTriggerSettings { get; set; }
+        /// <summary>
+        /// Наименование
+        /// </summary>
         public string Name 
         {
             get
@@ -54,6 +66,9 @@ namespace Logics.Models
                 return result;
             }
         }
+        /// <summary>
+        /// Шаблон для поиска наименования
+        /// </summary>
         public string NameSearchPattern
         { 
             get
